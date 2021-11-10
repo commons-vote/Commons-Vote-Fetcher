@@ -56,6 +56,37 @@ sub date_of_first_upload {
 	return $self->{'_dt_parser'}->parse_datetime($mw_timestamp);
 }
 
+sub image_upload_revision {
+	my ($self, $image) = @_;
+
+	if ($image !~ m/^(File|Image):/ms) {
+		$image = 'File:'.$image;
+	}
+
+	my $ref = $self->{'_mw'}->api({
+		action => 'query',
+		prop => 'revisions',
+		titles => $image,
+		rvlimit => 1,
+		rvprop => 'timestamp|user',
+		rvdir => 'newer',
+	});
+
+	if (exists $ref->{'query'}->{'pages'}->{'-1'}) {
+		return undef;
+	}
+
+	my ($pageid, $pageref) = each %{$ref->{query}->{pages}};
+	my $rev = @{$pageref->{revisions}}[0];
+	delete $pageref->{revisions};
+
+	return {
+		'pageid' => $pageid,
+		%{$rev},
+		%{$pageref},
+	};
+}
+
 sub images_in_category {
 	my ($self, $category) = @_;
 

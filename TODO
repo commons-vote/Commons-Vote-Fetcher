@@ -3,7 +3,8 @@ TODO
 1. Test for date_of_first_upload() method.
 2. Test for images_in_category() method.
 3. Doc
-4.
+4. Test for image_upload_revision() method.
+5.
 
 Applied
 =======
