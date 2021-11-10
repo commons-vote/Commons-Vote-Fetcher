@@ -56,6 +56,20 @@ sub date_of_first_upload {
 	return $self->{'_dt_parser'}->parse_datetime($mw_timestamp);
 }
 
+sub images_in_category {
+	my ($self, $category) = @_;
+
+	my $images_ar = $self->{'_mw'}->list({
+                action => 'query',
+                list => 'categorymembers',
+                cmtitle => 'Category:'.$category,
+                cmtype => 'file',
+                cmlimit => '10',
+        });
+
+	return @{$images_ar};
+}
+
 1;
 
 __END__
