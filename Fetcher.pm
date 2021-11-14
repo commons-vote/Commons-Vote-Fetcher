@@ -56,6 +56,36 @@ sub date_of_first_upload {
 	return $self->{'_dt_parser'}->parse_datetime($mw_timestamp);
 }
 
+sub image_info {
+	my ($self, $image) = @_;
+
+	if ($image !~ m/^(File|Image):/ms) {
+		$image = 'File:'.$image;
+	}
+
+	my $ref = $self->{'_mw'}->api({
+		action => 'query',
+		prop => 'imageinfo',
+		titles => $image,
+		iiprop => 'timestamp|user|size|extmetadata',
+	});
+
+	if (exists $ref->{'query'}->{'pages'}->{'-1'}) {
+		return undef;
+	}
+
+	my ($pageid, $pageref) = each %{$ref->{query}->{pages}};
+	my $rev_hr = $pageref->{imageinfo}->[0];
+
+	return {
+		'pageid' => $pageid,
+		'height' => $rev_hr->{'height'},
+		'width' => $rev_hr->{'width'},
+		'comment' => $rev_hr->{'extmetadata'}->{'ImageDescription'}->{'value'},
+		'artist' => $rev_hr->{'extmetadata'}->{'Artist'}->{'value'},
+	};
+}
+
 sub image_upload_revision {
 	my ($self, $image) = @_;
 
