@@ -4,7 +4,9 @@ TODO
 2. Test for images_in_category() method.
 3. Doc
 4. Test for image_upload_revision() method.
-5.
+5. All data structures need to stores in common data objects.
+   Not hashrefs.
+6.
 
 Applied
 =======
