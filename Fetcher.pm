@@ -120,10 +120,14 @@ sub image_upload_revision {
 sub images_in_category {
 	my ($self, $category) = @_;
 
+	if ($category !~ m/^Category:/ms) {
+		$category = 'Category:'.$category;
+	}
+
 	my $images_ar = $self->{'_mw'}->list({
                 action => 'query',
                 list => 'categorymembers',
-                cmtitle => 'Category:'.$category,
+                cmtitle => $category,
                 cmtype => 'file',
                 cmlimit => '10',
         });
