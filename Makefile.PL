@@ -5,7 +5,7 @@ use warnings;
 use inc::Module::Install;
 
 # Definition.
-abstract 'Class for comunication between commons.vote app and Wikimedia Commons.';
+abstract 'commons.vote fetcher for comunication between app and Wikimedia Commons.';
 author 'Michal Josef Spacek <skim@cpan.org>';
 author_requires 'English' => 0;
 author_requires 'File::Object' => 0.03;
