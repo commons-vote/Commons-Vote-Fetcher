@@ -18,6 +18,8 @@ name 'Commons-Vote-Fetcher';
 readme_from 'Fetcher.pm';
 recursive_author_tests('xt');
 requires 'Class::Utils' => 0;
+requires 'DateTime::Format::Strptime' => 0;
+requires 'MediaWiki::API' => 0;
 requires 'perl' => '5.8.0';
 resources 'bugtracker' => 'https://github.com/michal-josef-spacek/Commons-Vote-Fetcher/issues';
 resources 'homepage' => 'https://github.com/michal-josef-spacek/Commons-Vote-Fetcher';

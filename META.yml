@@ -26,6 +26,8 @@ no_index:
     - xt
 requires:
   Class::Utils: 0
+  DateTime::Format::Strptime: 0
+  MediaWiki::API: 0
   perl: 5.8.0
 resources:
   bugtracker: https://github.com/michal-josef-spacek/Commons-Vote-Fetcher/issues
