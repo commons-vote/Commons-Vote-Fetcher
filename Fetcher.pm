@@ -110,6 +110,9 @@ sub image_upload_revision {
 	my $rev = @{$pageref->{revisions}}[0];
 	delete $pageref->{revisions};
 
+	# Convert timestamp to DateTime object.
+	$rev->{'timestamp'} = $self->{'_dt_parser'}->parse_datetime($rev->{'timestamp'});
+
 	return {
 		'pageid' => $pageid,
 		%{$rev},
