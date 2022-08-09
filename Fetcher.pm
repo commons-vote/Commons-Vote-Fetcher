@@ -5,6 +5,7 @@ use warnings;
 
 use Class::Utils qw(set_params);
 use DateTime::Format::Strptime;
+use List::Util qw(none);
 use MediaWiki::API;
 
 our $VERSION = 0.01;
@@ -136,6 +137,46 @@ sub images_in_category {
         });
 
 	return @{$images_ar};
+}
+
+sub images_in_category_recursive {
+	my ($self, $category) = @_;
+
+	if ($category !~ m/^Category:/ms) {
+		$category = 'Category:'.$category;
+	}
+
+	my @categories = ($category);
+	push @categories, map { $_->{'title'} } $self->subcats_in_category($category);
+
+	my @images;
+	foreach my $category (@categories) {
+		foreach my $image_ar ($self->images_in_category($category)) {
+			if (none { $image_ar->{'pageid'} eq $_->{'pageid'} } @images) {
+				push @images, $image_ar;
+			}
+		}
+	}
+
+	return @images;
+}
+
+sub subcats_in_category {
+	my ($self, $category) = @_;
+
+	if ($category !~ m/^Category:/ms) {
+		$category = 'Category:'.$category;
+	}
+
+	my $categories_ar = $self->{'_mw'}->list({
+                action => 'query',
+                list => 'categorymembers',
+                cmtitle => $category,
+                cmtype => 'subcat',
+                cmlimit => '10',
+        });
+
+	return @{$categories_ar};
 }
 
 1;
