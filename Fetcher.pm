@@ -81,6 +81,7 @@ sub image_info {
 	return {
 		'artist' => $rev_hr->{'extmetadata'}->{'Artist'}->{'value'},
 		'comment' => $rev_hr->{'extmetadata'}->{'ImageDescription'}->{'value'},
+		'datetime_created' => $rev_hr->{'extmetadata'}->{'DateTimeOriginal'}->{'value'},
 		'height' => $rev_hr->{'height'},
 		'pageid' => $pageid,
 		'size' => $rev_hr->{'size'},
