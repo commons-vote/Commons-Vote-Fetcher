@@ -83,6 +83,7 @@ sub image_info {
 		'comment' => $rev_hr->{'extmetadata'}->{'ImageDescription'}->{'value'},
 		'height' => $rev_hr->{'height'},
 		'pageid' => $pageid,
+		'size' => $rev_hr->{'size'},
 		'width' => $rev_hr->{'width'},
 	};
 }
