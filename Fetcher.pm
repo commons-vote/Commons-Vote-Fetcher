@@ -79,11 +79,11 @@ sub image_info {
 	my $rev_hr = $pageref->{imageinfo}->[0];
 
 	return {
-		'pageid' => $pageid,
-		'height' => $rev_hr->{'height'},
-		'width' => $rev_hr->{'width'},
-		'comment' => $rev_hr->{'extmetadata'}->{'ImageDescription'}->{'value'},
 		'artist' => $rev_hr->{'extmetadata'}->{'Artist'}->{'value'},
+		'comment' => $rev_hr->{'extmetadata'}->{'ImageDescription'}->{'value'},
+		'height' => $rev_hr->{'height'},
+		'pageid' => $pageid,
+		'width' => $rev_hr->{'width'},
 	};
 }
 
