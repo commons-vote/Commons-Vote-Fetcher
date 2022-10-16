@@ -6,7 +6,9 @@ TODO
 4. Test for image_upload_revision() method.
 5. All data structures need to stores in common data objects.
    Not hashrefs.
-6.
+6. Fetch license from structured data on Commons.
+7. Fetch date of creation from structured data on Commons.
+8.
 
 Applied
 =======
