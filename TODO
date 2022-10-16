@@ -8,7 +8,8 @@ TODO
    Not hashrefs.
 6. Fetch license from structured data on Commons.
 7. Fetch date of creation from structured data on Commons.
-8.
+8. Improve consistency between MediaWiki::API in Fetcher and Wikibase::API.
+9.
 
 Applied
 =======

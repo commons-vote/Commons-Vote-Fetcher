@@ -7,6 +7,7 @@ use Class::Utils qw(set_params);
 use DateTime::Format::Strptime;
 use List::Util qw(none);
 use MediaWiki::API;
+use Wikibase::API;
 
 our $VERSION = 0.01;
 
@@ -28,6 +29,10 @@ sub new {
 	$self->{'_dt_parser'} = DateTime::Format::Strptime->new(
 		pattern => '%FT%T',
 		time_zone => 'UTC',
+	);
+
+	$self->{'_wb_api'} = Wikibase::API->new(
+		'mediawiki_site' => 'commons.wikimedia.org',
 	);
 
 	return $self;
@@ -87,6 +92,14 @@ sub image_info {
 		'size' => $rev_hr->{'size'},
 		'width' => $rev_hr->{'width'},
 	};
+}
+
+sub image_structured_data {
+	my ($self, $mid) = @_;
+
+	my $item = $self->{'_wb_api'}->get_item($mid);
+
+	return $item;
 }
 
 sub image_upload_revision {
