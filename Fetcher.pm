@@ -5,6 +5,9 @@ use warnings;
 
 use Class::Utils qw(set_params);
 use DateTime::Format::Strptime;
+use English;
+use Error::Pure qw(err);
+use Error::Pure::Utils qw(err_msg);
 use List::Util qw(none);
 use MediaWiki::API;
 use Wikibase::API;
@@ -97,7 +100,18 @@ sub image_info {
 sub image_structured_data {
 	my ($self, $mid) = @_;
 
-	my $item = $self->{'_wb_api'}->get_item($mid);
+	my $item = eval {
+		$self->{'_wb_api'}->get_item($mid);
+	};
+
+	# Check if item is not available (error code: 3).
+	if ($EVAL_ERROR eq 'Cannot get item.') {
+		my %error = err_msg();
+		if ($error{'Error code'} == 3) {
+			return;
+		}
+		err $EVAL_ERROR, %error;
+	}
 
 	return $item;
 }
