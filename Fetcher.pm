@@ -190,6 +190,18 @@ sub images_in_category_recursive {
 	return @images;
 }
 
+sub user_exists {
+	my ($self, $wm_username) = @_;
+
+	my $user_hr = $self->{'_mw'}->api({
+		action => 'query',
+		list => 'users',
+		ususers => $wm_username,
+	});
+
+	return $user_hr->{'query'}->{'users'}->[0]->{'userid'} || undef;
+}
+
 sub subcats_in_category {
 	my ($self, $category) = @_;
 
